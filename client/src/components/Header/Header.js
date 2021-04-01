@@ -16,8 +16,9 @@ const Header = ({
     let categoryList = categories.map((category) => 
             <NavDropdown.Item 
             key={category.id} 
-            href={`/${category.name}`}>
-                {category.name} ({category.products.length})
+            href={`/categories/${category.name}`}>
+                {category.name} &nbsp;
+                <span className="badge badge-pill badge-primary">{category.products.length}</span>
             </NavDropdown.Item>
         );
 
@@ -28,7 +29,7 @@ const Header = ({
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="/about">About</Nav.Link>
-                    <Nav.Link href="/categories/all">Shop</Nav.Link>
+                    <Nav.Link href="/categories">Shop</Nav.Link>
                     <NavDropdown title="Categories" id="basic-nav-dropdown">
                         {categoryList}
                     </NavDropdown>

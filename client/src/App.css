@@ -83,3 +83,12 @@ h5 {
 footer{
   margin-top: 200px;
 }
+
+.card-width{
+  margin: 30px;
+}
+
+.flex-container{
+  justify-content: space-around;
+  margin: 0;
+}

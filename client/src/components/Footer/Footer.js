@@ -1,4 +1,6 @@
-const Footer = ({}) => {
+const Footer = ({
+
+}) => {
   return (
     <footer className="bg-primary text-white mt-5">
       <div className="container text-center text-md-left pt-4 pt-md-5">
