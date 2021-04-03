@@ -6,6 +6,7 @@ const Header = ({
 }) => {
     let [categories, setCategories] = useState([]);
 
+     console.log(categories);
     useEffect(() => {
         fetch('http://localhost:5002/api/category/all')
         .then(res => res.json())
@@ -33,6 +34,7 @@ const Header = ({
                     <NavDropdown title="Categories" id="basic-nav-dropdown">
                         {categoryList}
                     </NavDropdown>
+                    <Nav.Link href="/products/add">Add Product</Nav.Link>
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />

@@ -10,13 +10,13 @@ const Products = ({
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch(``)
+    fetch(`http://localhost:5002/api/product/category/${match.params.category}`)
     .then(res => res.json())
     .then(res => setProducts(res))
     .catch(err => console.log(err));
   }, []);
 
-  let productsList = products.length == 0 ? 
+  let productsList = products.length === 0 ? 
     <h1 className="display-4 text-danger">
       Sorry there are still no items in this category, return later. <Link to="/categories">See other categories.</Link>
     </h1>
