@@ -15,7 +15,7 @@ const CheckBox = ({
     };
 
     const checkBoxes = options.map((option) =>
-        <div class="form-check">
+        <div class="form-check" key={option}>
             <input class="form-check-input" type="radio" name="" id={option} value={option} onChange={onChange} checked={checked === option} required/>
             <label class="form-check-label" for={option}>
                 {option}

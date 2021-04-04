@@ -16,13 +16,28 @@ const Products = ({
     .catch(err => console.log(err));
   }, []);
 
+  console.log(products);
   let productsList = products.length === 0 ? 
     <h1 className="display-4 text-danger">
       Sorry there are still no items in this category, return later. <Link to="/categories">See other categories.</Link>
     </h1>
     :
     products.map((product) => 
-      <Product></Product>
+      <Product
+        key={product.id}
+        category={product.category}
+        condition={product.condition}
+        createdOn={product.createdOn}
+        description={product.description}
+        id={product.id}
+        image={product.image}
+        isFreeShipping={product.isFreeShipping}
+        likes={product.likes}
+        name={product.name}
+        price={product.price}
+        productWords={product.productWords}
+        user={product.user}
+      />
     );
 
   return (

@@ -1,7 +1,31 @@
+import Rating from '../Products/Rating';
+import KeyWords from '../Products/KeyWords';
+import {Link} from 'react-router-dom';
 
 const Product = ({
-
+  category,
+  condition,
+  createdOn,
+  id,
+  image,
+  isFreeShipping,
+  likes,
+  name,
+  price,
+  productWords,
+  user,
 }) => {
+
+  console.log();
+
+  const LikeProduct = (e) => {
+    console.log(e.target);
+  };
+
+  const WhishListProduct = (e) => {
+    console.log(e.target);
+  };
+
   return (
     <div className="container mt-5 mb-5">
       <div className="d-flex justify-content-center row">
@@ -10,69 +34,40 @@ const Product = ({
             <div className="col-md-3 mt-1">
               <img
                 className="img-fluid img-responsive rounded product-image"
-                src="https://i.imgur.com/QpjAiHq.jpg"
+                src={image}
                 alt="Product"
               />
             </div>
             <div className="col-md-6 mt-1">
-              <h5>Quant olap shirts</h5>
+              <h5 className="text-truncate">{name}</h5>
+              <h6 className="text-primary">{createdOn}</h6>
+              <h6 className="text-muted">{category}</h6>
               <div className="d-flex flex-row">
-                <div className="ratings mr-2">
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                  <i className="fa fa-star"></i>
-                </div>
-                <span>310</span>
+                <Rating likes={likes}/>
+                <span className="badge badge-primary">{likes} likes</span>
               </div>
-              <div className="mt-1 mb-1 spec-1">
-                <span>100% cotton</span>
-                <span className="dot"></span>
-                <span>Light weight</span>
-                <span className="dot"></span>
-                <span>
-                  Best finish
-                  <br />
-                </span>
-              </div>
-              <div className="mt-1 mb-1 spec-1">
-                <span>Unique design</span>
-                <span className="dot"></span>
-                <span>For men</span>
-                <span className="dot"></span>
-                <span>
-                  Casual
-                  <br />
-                </span>
-              </div>
-              <p className="text-justify text-truncate para mb-0">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable.
-                <br />
-                <br />
-              </p>
+              <KeyWords keywords={productWords.slice(0, 3)}/>
+              {productWords.length > 3 && <KeyWords keywords ={productWords.slice(2, 3)}/>}
+              {productWords.length > 6 && <KeyWords keywords ={productWords.slice(5, 3)}/>}
             </div>
             <div className="align-items-center align-content-center col-md-3 border-left mt-1">
-              <div className="d-flex flex-row align-items-center">
-                <h4 className="mr-1">$13.99</h4>
-                <span className="strike-text">$20.99</span>
-              </div>
-              <h6 className="text-success">Free shipping</h6>
+              <h4 className="text-primary">{user}</h4>
+              <h4 className="mr-1">{price === 0 ? 'Free' : `${price} lv.`}</h4>
+              <h6 className="text-success">{isFreeShipping ? 'Free shipping' : 'Shipping not included'}</h6>
+              <h6 className="text-primary">{condition}</h6>
               <div className="d-flex flex-column mt-4">
-                <button className="btn btn-primary btn-sm" type="button">
-                  Details
-                </button>
+                <Link className="text-white btn btn-primary btn-sm" to={`/products/details/${id}`}>Details</Link>
                 <button
                   className="btn btn-outline-primary btn-sm mt-2"
                   type="button"
+                  onClick={LikeProduct}
                 >
                   Like
                 </button>
                 <button
                   className="btn btn-outline-info btn-sm mt-2"
                   type="button"
+                  onClick={WhishListProduct}
                 >
                   Add to wishlist
                 </button>
