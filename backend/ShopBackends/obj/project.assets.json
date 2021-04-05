@@ -5759,11 +5759,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dimiturkazakov/React-Project/backend/ShopBackend/ShopBackend/ShopBackend.csproj",
+      "projectUniqueName": "/Users/dimiturkazakov/React-Project/backend/ShopBackends/ShopBackend.csproj",
       "projectName": "ShopBackend",
-      "projectPath": "/Users/dimiturkazakov/React-Project/backend/ShopBackend/ShopBackend/ShopBackend.csproj",
+      "projectPath": "/Users/dimiturkazakov/React-Project/backend/ShopBackends/ShopBackend.csproj",
       "packagesPath": "/Users/dimiturkazakov/.nuget/packages/",
-      "outputPath": "/Users/dimiturkazakov/React-Project/backend/ShopBackend/ShopBackend/obj/",
+      "outputPath": "/Users/dimiturkazakov/React-Project/backend/ShopBackends/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"

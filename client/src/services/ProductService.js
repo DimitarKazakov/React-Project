@@ -13,7 +13,6 @@ export function CreateProduct(user, inputs, condition, shipping){
         Condition: condition,
         KeyWords: inputs.children[4].children[1].value.split(' '),
     };
-    console.log(body);
     fetch('http://localhost:5002/api/product/add',{
         method: 'POST',
         body: JSON.stringify(body),

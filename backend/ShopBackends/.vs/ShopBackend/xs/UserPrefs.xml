@@ -1,0 +1,38 @@
+﻿<Properties StartupConfiguration="{97855CC8-9145-4E75-82D2-CF8752310123}|Default">
+  <MonoDevelop.Ide.ItemProperties.ShopBackend PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UserController.cs">
+    <Files>
+      <File FileName="Services/IUserService.cs" Line="14" Column="23" />
+      <File FileName="Services/UserService.cs" Line="72" Column="23" />
+      <File FileName="Controllers/UserController.cs" Line="46" Column="36" />
+      <File FileName="Dtos/UserLoginDto.cs" Line="4" Column="18" />
+      <File FileName="Controllers/ProductController.cs" Line="1" Column="1" />
+      <File FileName="Startup.cs" Line="40" Column="78" />
+      <File FileName="Program.cs" Line="16" Column="1" />
+      <File FileName="Dtos/ResultDto.cs" Line="10" Column="30" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ShopBackend" expanded="True">
+            <Node name="ShopBackend" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="UserController.cs" selected="True" />
+              </Node>
+              <Node name="Dtos" expanded="True" />
+              <Node name="Services" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/dimiturkazakov/React-Project/backend/ShopBackends/Services/UserService.cs" relfile="Services/UserService.cs" line="72" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

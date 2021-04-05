@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShopBackend.Models;
 using System.Linq;
+using ShopBackend.Dtos;
 
 namespace ShopBackend.Services
 {
@@ -23,6 +24,57 @@ namespace ShopBackend.Services
         public async Task<User> GetByUsername(string username)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == username);
+        }
+
+        public async Task<bool> Login(UserLoginDto user)
+        {
+            var account = await CheckUser(user);
+            if (account == null || account.Password != user.Password)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<ResultDto> Register(UserLoginDto user)
+        {
+            var res = new ResultDto();
+            var account = await CheckUser(user);
+            if (account != null)
+            {
+                res.Message = "There is user with this email";
+                return res;
+            }
+
+            if (user.Password != user.ConfirmPassword)
+            {
+                res.Message = "Passwords should match";
+                return res;
+            }
+
+            if (account != null && user.Username == account.Username)
+            {
+                res.Message = "There is user with this username";
+                return res;
+            }
+
+            await _dbContext.Users.AddAsync(new User
+            {
+                Email = user.Email,
+                CreatedOn = DateTime.Now,
+                Password = user.Password,
+                Username = user.Username,
+            });
+
+            await _dbContext.SaveChangesAsync();
+            res.Message = "Ok";
+            return res;
+        }
+
+        private async Task<User> CheckUser(UserLoginDto user)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == user.Email);
         }
     }
 }

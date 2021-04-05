@@ -16,7 +16,7 @@ const Product = ({
   user,
 }) => {
 
-  console.log();
+  const currentUser = localStorage.getItem('user');
 
   const LikeProduct = (e) => {
     console.log(e.target);
@@ -57,20 +57,20 @@ const Product = ({
               <h6 className="text-primary">{condition}</h6>
               <div className="d-flex flex-column mt-4">
                 <Link className="text-white btn btn-primary btn-sm" to={`/products/details/${id}`}>Details</Link>
-                <button
+                {currentUser && <button
                   className="btn btn-outline-primary btn-sm mt-2"
                   type="button"
                   onClick={LikeProduct}
                 >
                   Like
-                </button>
-                <button
+                </button>}
+                {currentUser && <button
                   className="btn btn-outline-info btn-sm mt-2"
                   type="button"
                   onClick={WhishListProduct}
                 >
                   Add to wishlist
-                </button>
+                </button>}
               </div>
             </div>
           </div>

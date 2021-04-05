@@ -9,7 +9,7 @@ const ProductDetails = ({
     
     const [product, setProduct] = useState({});
     const [user, setUser] = useState({});
-    
+    const currentUser = localStorage.getItem('user');
     useEffect(() => {
         fetch(`http://localhost:5002/api/product/productById/${match.params.id}`)
         .then(res => res.json())
@@ -49,8 +49,8 @@ const ProductDetails = ({
             <hr/>
             <p className="mt-5 mb-3 pt-1 h5">{product.description}</p>
             <hr/>
-            <button type="button" className="btn btn-outline-primary mr-0 mr-md-5 mt-2 mb-3">Like product</button>
-            <button type="button" className="btn btn-outline-info mr-0 mr-md-5 mt-2 mb-3">Add to Wishlist</button>
+            {currentUser && <button type="button" className="btn btn-outline-primary mr-0 mr-md-5 mt-2 mb-3">Like product</button>}
+            {currentUser && <button type="button" className="btn btn-outline-info mr-0 mr-md-5 mt-2 mb-3">Add to Wishlist</button>}
             <button type="button" className="btn btn-outline-danger mt-2 mb-3">Contact Seller</button>
         </div>
         </div>

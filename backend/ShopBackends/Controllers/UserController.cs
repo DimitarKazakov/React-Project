@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ShopBackend.Dtos;
 using ShopBackend.Models;
 using ShopBackend.Services;
 
@@ -33,6 +34,18 @@ namespace ShopBackend.Controllers
         public async Task<User> GetByProductId(int id)
         {
             return await userService.GetByProductId(id);
+        }
+
+        [HttpPost("login")]
+        public async Task<bool> Login([FromBody] UserLoginDto user)
+        {
+            return await userService.Login(user);
+        }
+
+        [HttpPost("register")]
+        public async Task<ResultDto> Register([FromBody] UserLoginDto user)
+        {
+            return await userService.Register(user);
         }
     }
 }

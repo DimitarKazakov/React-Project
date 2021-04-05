@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ShopBackend.Dtos;
 using ShopBackend.Models;
 
 namespace ShopBackend.Services
@@ -10,5 +11,8 @@ namespace ShopBackend.Services
 
         Task<User> GetByProductId(int id);
 
+        Task<ResultDto> Register(UserLoginDto user);
+
+        Task<bool> Login(UserLoginDto user);
     }
 }

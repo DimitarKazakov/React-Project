@@ -15,6 +15,11 @@ const AddProduct = ({
         'Shipping is covered by the buyer',
     ];
 
+    const currentUser = localStorage.getItem('user');
+    if(currentUser){
+        history.push('/login');
+    }
+
     const [user, setUser] = useState({});
     const [categories, setCategories] = useState([]);
     const [conditions, setConditions] = useState([]);

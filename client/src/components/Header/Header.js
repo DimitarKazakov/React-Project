@@ -1,26 +1,47 @@
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
 import {useEffect, useState} from 'react';
-
+import {Link, NavLink, useHistory} from 'react-router-dom';
 const Header = ({
-
 }) => {
     let [categories, setCategories] = useState([]);
+    const [user, setUser] = useState('');
+    const history = useHistory();
 
-     console.log(categories);
+
     useEffect(() => {
         fetch('http://localhost:5002/api/category/all')
         .then(res => res.json())
         .then(res => setCategories(res))
         .catch(err => console.log(err));
+
+        setUser(localStorage.getItem('user'));
+
+        setInterval(() => {
+            const currentUser = localStorage.getItem('user');
+            if (currentUser !== user) {
+                setUser(currentUser);
+            }
+        }, 500);
     }, []);
 
+    const logoutUser = () => {
+        if (!user) {
+            return;
+        }
+
+        localStorage.removeItem('user');
+        setUser('');
+        history.push('/');
+    };
+
     let categoryList = categories.map((category) => 
-            <NavDropdown.Item 
+            <Link 
+            className="dropdown-item"
             key={category.id} 
-            href={`/categories/${category.name}`}>
+            to={`/categories/${category.name}`}>
                 {category.name} &nbsp;
                 <span className="badge badge-pill badge-primary">{category.products.length}</span>
-            </NavDropdown.Item>
+            </Link>
         );
 
     return (
@@ -29,17 +50,16 @@ const Header = ({
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/about">About</Nav.Link>
-                    <Nav.Link href="/categories">Shop</Nav.Link>
+                    <Link className="nav-link" to="/about">About</Link>
+                    <Link className="nav-link" to="/categories">Shop</Link>
                     <NavDropdown title="Categories" id="basic-nav-dropdown">
                         {categoryList}
                     </NavDropdown>
-                    <Nav.Link href="/products/add">Add Product</Nav.Link>
+                    {user && <Link className="nav-link" to="/products/add">Add Product</Link>}
                 </Nav>
-                <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-light">Search</Button>
-                </Form>
+                {!user && <NavLink className="nav-link text-white" to="/login">Login</NavLink>}
+                {!user && <NavLink className="nav-link text-white" to="/register">Register</NavLink>}
+                {user && <button onClick={logoutUser}  className="nav-link btn btn-outline-primary text-white">Logout</button>}
             </Navbar.Collapse>
         </Navbar>
     );

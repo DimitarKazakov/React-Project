@@ -14,7 +14,7 @@ const Products = ({
     .then(res => res.json())
     .then(res => setProducts(res))
     .catch(err => console.log(err));
-  }, []);
+  }, [match.params.category]);
 
   console.log(products);
   let productsList = products.length === 0 ? 

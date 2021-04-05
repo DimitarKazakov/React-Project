@@ -6,8 +6,12 @@ import Categories from './components/Categories';
 import Products from './components/Products';
 import AddProduct from './components/AddProduct';
 import ProductDetails from './components/Product/ProductDetails';
-
+import Login from './components/Account/Login';
+import Register from './components/Account/Register';
+import React from 'react';
 import {Switch, Route} from 'react-router-dom';
+
+const UserContext = React.createContext();
 
 function App() {
   return (
@@ -23,6 +27,8 @@ function App() {
               <Route path="/categories/:category" component={Products} />
               <Route path="/products/add" exact component={AddProduct}/>
               <Route path="/products/details/:id" component={ProductDetails}/>
+              <Route path="/login" component={Login}/>
+              <Route path="/register" component={Register}/>
           </Switch>
       <br/>
       <br/>
