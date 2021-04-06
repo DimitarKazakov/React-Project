@@ -14,5 +14,11 @@ namespace ShopBackend.Services
         Task<ResultDto> Register(UserLoginDto user);
 
         Task<bool> Login(UserLoginDto user);
+
+        int GetLikesProductsCount(string email);
+
+        int GetWishListedProductsCount(string email);
+
+        Task<bool> CreateMessage(MessageDto message);
     }
 }

@@ -48,9 +48,9 @@ namespace ShopBackend.Controllers
 
         [HttpPost("add")]
 
-        public async Task Create([FromBody] AddProductDto productDto)
+        public async Task<bool> Create([FromBody] AddProductDto productDto)
         {
-            await productService.CreateProduct(productDto);
+            return await productService.CreateProduct(productDto);
         }
     }
 }

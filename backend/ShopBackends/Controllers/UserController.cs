@@ -47,5 +47,23 @@ namespace ShopBackend.Controllers
         {
             return await userService.Register(user);
         }
+
+        [HttpPost("message")]
+        public async Task<bool> MessageUser([FromBody] MessageDto message)
+        {
+            return await userService.CreateMessage(message);
+        }
+
+        [HttpGet("likedProducts/{email}")]
+        public int GetLikesProductsCount(string email)
+        {
+            return userService.GetLikesProductsCount(email);
+        }
+
+        [HttpGet("wishProducts/{email}")]
+        public int GetWishListedProductsCount(string email)
+        {
+            return userService.GetWishListedProductsCount(email);
+        }
     }
 }

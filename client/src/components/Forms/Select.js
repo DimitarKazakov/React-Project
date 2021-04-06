@@ -16,7 +16,7 @@ const Select =({
     
     return (
         <div class="form-group">
-            <label className="" htmlFor={labelName}>
+            <label className="font-weight-bold" htmlFor={labelName}>
                 {labelName}&nbsp;&nbsp;
                 {optionalLabelName && <span className="text-muted">{optionalLabelName}</span>}
             </label>

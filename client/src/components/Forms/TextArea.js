@@ -5,15 +5,17 @@ const TextArea = ({
     optionalLabelName,
     rows,
     placeholder,
-    errorMessage
+    errorMessage,
+    margin,
+    name
 }) => {
     return (
-        <div class="form-group mb-3">
-            <label className="" htmlFor={labelName}>
+        <div class={`form-group mb-${margin} mt-${margin}`}>
+            <label className="font-weight-bold" htmlFor={labelName}>
                 {labelName}&nbsp;&nbsp;
                 {optionalLabelName && <span className="text-muted">{optionalLabelName}</span>}
             </label>
-            <textarea value={placeholder} class="form-control" id={labelName} rows={rows} required/>
+            <textarea name={name} class="form-control" id={labelName} rows={rows} required/>
             <span className="invalid-feedback">{errorMessage}</span>
         </div>
     );

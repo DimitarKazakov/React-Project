@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react';
 import Rating from '../Products/Rating';
 import UserInfo from '../UserInfo/UserInfo';
 import ContactForm from '../Contact/ContactForm';
+import ProductImage from '../Products/ProductImage';
+import AccordionItem from '../Products/AccordionItem';
 
 const ProductDetails = ({
     match
@@ -28,10 +30,11 @@ const ProductDetails = ({
         <div className="row">
         <div className="col-md-6 mb-4 mb-md-3">
             <div className="row mx-1">
-                <div className="col-12 mb-0 rounded">
-                    <img src={product.image} alt="product"
-                    className="img-fluid z-depth-1"/>
-                </div>
+                <ProductImage
+                    image={product.image}
+                    col={12}
+                    mt={0}
+                />
             </div>
         </div>
         <div className="col-md-6">
@@ -55,56 +58,35 @@ const ProductDetails = ({
         </div>
         </div>
         <div class="accordion" id="accordionExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Seller Information
-            </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
+            <AccordionItem header="Seller Information" id="Info">
                 <UserInfo 
-                    username={user.username}
-                    email={user.email}
-                    realName={user.realName}
-                    phone={user.phone}
-                    address={`${user.address}, ${user.town}`}
-                />
-            </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Location
-            </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
+                        username={user.username}
+                        email={user.email}
+                        realName={user.realName}
+                        phone={user.phone}
+                        address={`${user.address}, ${user.town}`}
+                    />
+            </AccordionItem>
+            <AccordionItem header="Location" id="Location">
                 <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
-                    <iframe class="embed-responsive-item" src={`https://maps.google.com/maps?q=${user.address}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-                        allowfullscreen></iframe>
+                    <iframe 
+                    className="embed-responsive-item" 
+                    src={`https://maps.google.com/maps?q=${user.address}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                    allowfullscreen
+                    title="GoogleMap"
+                    >
+                    </iframe>
                 </div>
-            </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Contact Seller
-            </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
+            </AccordionItem>
+            <AccordionItem header="Contact Seller" id="Contact">
                 <ContactForm
-                    heading={`Contact ${user.username}`}
+                    heading={user.username}
                     email={user.email}
                     phone={user.phone}
                     address={`${user.address}, ${user.town}`}
+                    user = {currentUser}
                 />
-            </div>
-            </div>
-        </div>
+            </AccordionItem>
         </div>
         </section>
     );

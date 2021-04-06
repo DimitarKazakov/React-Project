@@ -17,7 +17,7 @@ namespace ShopBackend.Services
             _dbContext = dbContext;
         }
 
-        public async Task CreateProduct(AddProductDto product)
+        public async Task<bool> CreateProduct(AddProductDto product)
         {
             var user = await _dbContext.Users.FirstAsync(x => x.Email == product.UserEmail);
             var category = await this.GetCategory(product.Category);
@@ -40,6 +40,8 @@ namespace ShopBackend.Services
             await _dbContext.SaveChangesAsync();
 
             await this.AddKeyWords(product.KeyWords, dbProduct);
+
+            return true;
         }
 
         public IEnumerable<string> GetAllConditions()

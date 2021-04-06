@@ -16,6 +16,23 @@ namespace ShopBackend.Services
             _dbContext = dbContext;
         }
 
+        public async Task<bool> CreateMessage(MessageDto message)
+        {
+            var user = await _dbContext.Users.FirstAsync(x => x.Username.ToLower() == message.To.ToLower());
+            await _dbContext.Messages.AddAsync(new Message
+            {
+                ContactLink = message.ContactLink,
+                Subject = message.Subject,
+                Content = message.Content,
+                CreatedOn = DateTime.Now,
+                From = message.From,
+                User = user
+            });
+
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<User> GetByProductId(int id)
         {
             return await _dbContext.Products.Where(x => x.Id == id).Select(x => x.User).FirstAsync();
@@ -24,6 +41,16 @@ namespace ShopBackend.Services
         public async Task<User> GetByUsername(string username)
         {
             return await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == username);
+        }
+
+        public int GetLikesProductsCount(string email)
+        {
+            return _dbContext.ReactedProducts.Where(x => x.User.Email == email && x.Liked == true).Count();
+        }
+
+        public int GetWishListedProductsCount(string email)
+        {
+            return _dbContext.ReactedProducts.Where(x => x.User.Email == email && x.Wishlisted == true).Count();
         }
 
         public async Task<bool> Login(UserLoginDto user)

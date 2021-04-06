@@ -8,7 +8,7 @@ namespace ShopBackend.Services
 {
     public interface IProductService
     {
-        public Task CreateProduct(AddProductDto product);
+        public Task<bool> CreateProduct(AddProductDto product);
 
         public Task<ProductDto> GetProductById(int id);
 

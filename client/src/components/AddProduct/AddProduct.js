@@ -16,7 +16,7 @@ const AddProduct = ({
     ];
 
     const currentUser = localStorage.getItem('user');
-    if(currentUser){
+    if(!currentUser){
         history.push('/login');
     }
 
@@ -69,6 +69,7 @@ const AddProduct = ({
                             optionalLabelName="(The name of the product/service - max 100 symbols)"
                             placeholder="Type the name here..."
                             errorMessage="Name is required and it should be less than 100 symbols"
+                            margin="5"
                         />
                         <hr/>
                         <TextInput
@@ -76,6 +77,7 @@ const AddProduct = ({
                             optionalLabelName="(Image url)"
                             placeholder="Paste image url here..."
                             errorMessage="Image is required"
+                            margin="5"
                         />
                         <hr/>
                         <TextInput
@@ -83,6 +85,7 @@ const AddProduct = ({
                             optionalLabelName="(Short description in words - max 6 words)"
                             placeholder="Type key words here..."
                             errorMessage="Max 6 keywords!!!"
+                            margin="5"
                         />
                         <hr/>
                         <TextArea
@@ -90,6 +93,7 @@ const AddProduct = ({
                             optionalLabelName="(Write good description of what you are offering)"
                             errorMessage="Description is required and it should be less than 1000 symbols"
                             rows="6"
+                            margin="5"
                         />
                         <hr/>
                         <Select
@@ -111,6 +115,7 @@ const AddProduct = ({
                             optionalLabelName="(The price of the product)"
                             placeholder="Type the price here..."
                             errorMessage="The price is required"
+                            margin="5"
                         />
                         <hr/>
                         <CheckBox

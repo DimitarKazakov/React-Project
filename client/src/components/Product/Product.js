@@ -1,6 +1,7 @@
 import Rating from '../Products/Rating';
 import KeyWords from '../Products/KeyWords';
 import {Link} from 'react-router-dom';
+import ProductImage from '../Products/ProductImage';
 
 const Product = ({
   category,
@@ -31,13 +32,11 @@ const Product = ({
       <div className="d-flex justify-content-center row">
         <div className="col-md-10">
           <div className="row p-2 bg-white border rounded">
-            <div className="col-md-3 mt-1">
-              <img
-                className="img-fluid img-responsive rounded product-image"
-                src={image}
-                alt="Product"
-              />
-            </div>
+              <ProductImage
+                    image={image}
+                    col={'md-3'}
+                    mt={1}
+                />
             <div className="col-md-6 mt-1">
               <h5 className="text-truncate">{name}</h5>
               <h6 className="text-primary">{createdOn}</h6>
