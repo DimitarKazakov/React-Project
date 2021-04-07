@@ -1,11 +1,13 @@
 ﻿<Properties StartupConfiguration="{97855CC8-9145-4E75-82D2-CF8752310123}|Default">
   <MonoDevelop.Ide.ItemProperties.ShopBackend PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/UserService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Dtos/AddProductDto.cs">
     <Files>
       <File FileName="Controllers/UserController.cs" Line="54" Column="50" />
-      <File FileName="Dtos/MessageDto.cs" Line="18" Column="34" />
-      <File FileName="Services/IUserService.cs" Line="22" Column="20" />
+      <File FileName="Dtos/MessageDto.cs" />
+      <File FileName="Services/IUserService.cs" />
       <File FileName="Services/UserService.cs" Line="32" Column="49" />
+      <File FileName="Controllers/ProductController.cs" Line="51" Column="57" />
+      <File FileName="Dtos/AddProductDto.cs" Line="6" Column="18" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,11 +15,11 @@
           <Node name="ShopBackend" expanded="True">
             <Node name="ShopBackend" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Dtos" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="UserService.cs" selected="True" />
+              <Node name="Dtos" expanded="True">
+                <Node name="AddProductDto.cs" selected="True" />
               </Node>
+              <Node name="Models" expanded="True" />
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>

@@ -24,10 +24,10 @@ namespace ShopBackend.Controllers
         //    return await productService.GetProductById(id);
         //}
 
-        [HttpGet("{name}")]
-        public async Task<User> GetByUsername(string name)
+        [HttpGet("{email}")]
+        public async Task<User> GetByUsername(string email)
         {
-            return await userService.GetByUsername(name);
+            return await userService.GetByEmail(email);
         }
 
         [HttpGet("product/{id}")]

@@ -5,7 +5,7 @@ const CheckBox = ({
     optionalLabelName,
     options,
     errorMessage,
-    handler
+    handler,
 }) => {
     const [checked, setChecked] = useState(options[0]);
 

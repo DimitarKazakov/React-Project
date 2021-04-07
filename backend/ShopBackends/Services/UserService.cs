@@ -38,9 +38,9 @@ namespace ShopBackend.Services
             return await _dbContext.Products.Where(x => x.Id == id).Select(x => x.User).FirstAsync();
         }
 
-        public async Task<User> GetByUsername(string username)
+        public async Task<User> GetByEmail(string email)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Username == username);
+            return await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
 
         public int GetLikesProductsCount(string email)

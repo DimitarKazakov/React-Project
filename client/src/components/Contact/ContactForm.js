@@ -1,6 +1,7 @@
 import TextInput from '../Forms/TextInput';
 import TextArea from '../Forms/TextArea';
 import ContactFormAside from '../Contact/ContactFormAside';
+import {useState} from 'react';
 
 const ContactForm = ({
     heading,
@@ -9,15 +10,42 @@ const ContactForm = ({
     address,
     user
 }) => {
+
+    const [error, setError] = useState('');
+
     const onSubmit = (e) => {
         e.preventDefault();
-        
+        const user = e.target.username.value;
+        const contactInfo = e.target.email.value;
+        const subject = e.target.subject.value;
+        const content = e.target.content.value;
+
+        if (!user || user.length > 30) {
+            setError('Please type your name, maximum 30 characters...');
+            return;
+        }
+
+        if (!contactInfo || contactInfo.length > 20) {
+            setError('Please type your contact link, maximum 20 characters...');
+            return;
+        }
+
+        if (!subject || subject.length > 20) {
+            setError('Please type short subject of the message, maximum 20 characters...');
+            return;
+        }
+
+        if (!content || content.length > 500) {
+            setError('Please type in the content area, maximum 500 characters...');
+            return;
+        }
+
         const body = {
-            From: e.target.username.value,
+            From: user,
             To: heading,
-            Subject: e.target.subject.value,
-            Content: e.target.content.value,
-            ContactLink: e.target.email.value,
+            Subject: subject,
+            Content: content,
+            ContactLink: contactInfo,
         };
 
         fetch('http://localhost:5002/api/user/message',{
@@ -27,14 +55,13 @@ const ContactForm = ({
                 'Content-Type': 'application/json',
             },
         });
-        console.log(body);
     };
 
     return (
         <section class="mb-4">
         <h2 class="h1-responsive font-weight-bold text-center text-primary my-4">Contact {heading}</h2>
         <div class="row">
-
+        {error && <h5 className="text-danger">{error}</h5>}
             <div class="col-md-9 mb-md-0 mb-5">
                 <form onSubmit={onSubmit}>  
                     <div class="row">

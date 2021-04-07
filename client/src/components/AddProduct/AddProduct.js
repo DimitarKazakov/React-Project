@@ -25,9 +25,10 @@ const AddProduct = ({
     const [conditions, setConditions] = useState([]);
     const [checkedCondition, setCheckedCondition] = useState(conditions[0]);
     const [checkedShipping, setCheckedShipping] = useState(freeShipping[0]);
+    const [error, setError] = useState('');
 
     useEffect(() => {
-        fetch('http://localhost:5002/api/user/DoggeLover20')
+        fetch(`http://localhost:5002/api/user/${currentUser}`)
         .then(res => res.json())
         .then(res => setUser(res))
         .catch(err => console.log(err));
@@ -45,6 +46,37 @@ const AddProduct = ({
 
     const SubmitForm = (e) => {
         e.preventDefault();
+        const name = e.target.name.value;
+        const image = e.target.image.value;
+        const keyWords = e.target.keys.value.split(' ');
+        const description = e.target.description.value;
+        const price = e.target.price.value;
+        
+        if (!name || name.length > 30) {
+            setError('Name is required and it should be less than 30 symbols');
+            return;
+        }
+
+        if (!keyWords || keyWords.length > 9) {
+            setError('Key Words are required and no more than 9');
+            return;
+        }
+
+        if (!image || (!image.startsWith('http://') && !image.startsWith('https://'))) {
+            setError('Please write valid image url');
+            return;
+        }
+
+        if (!description || description.length > 500) {
+            setError('Description is required and it should be less than 500 symbols');
+            return;
+        }
+
+        if (!price || !Number.parseFloat(price)) {
+            setError('Please write valid price for the product(if it\'s free write 0)');
+            return;
+        }
+
         CreateProduct(user, e.target, checkedCondition, checkedShipping);
         history.push('/');
     };
@@ -58,18 +90,19 @@ const AddProduct = ({
                     email={user.email}
                     realName={user.realName}
                     phone={user.phone}
-                    address={`${user.address}, ${user.town}`}
+                    address={user.address ? `${user.address}, ${user.town}` : ''}
                 />
                 <div className="col-md-8 order-md-1">
                     <h4 className="mb-3">Product information</h4>
                     <hr/>
+                    {error && <h5 className="text-danger">{error}</h5>}
                     <form onSubmit={SubmitForm}>
                         <TextInput
                             labelName="Name"
-                            optionalLabelName="(The name of the product/service - max 100 symbols)"
+                            optionalLabelName="(The name of the product/service - max 30 symbols)"
                             placeholder="Type the name here..."
-                            errorMessage="Name is required and it should be less than 100 symbols"
                             margin="5"
+                            name="name"
                         />
                         <hr/>
                         <TextInput
@@ -78,14 +111,16 @@ const AddProduct = ({
                             placeholder="Paste image url here..."
                             errorMessage="Image is required"
                             margin="5"
+                            name="image"
                         />
                         <hr/>
                         <TextInput
                             labelName="Key Words"
-                            optionalLabelName="(Short description in words - max 6 words)"
+                            optionalLabelName="(Short description in words - max 9 words)"
                             placeholder="Type key words here..."
                             errorMessage="Max 6 keywords!!!"
                             margin="5"
+                            name="keys"
                         />
                         <hr/>
                         <TextArea
@@ -94,6 +129,7 @@ const AddProduct = ({
                             errorMessage="Description is required and it should be less than 1000 symbols"
                             rows="6"
                             margin="5"
+                            name="description"
                         />
                         <hr/>
                         <Select
@@ -116,6 +152,7 @@ const AddProduct = ({
                             placeholder="Type the price here..."
                             errorMessage="The price is required"
                             margin="5"
+                            name="price"
                         />
                         <hr/>
                         <CheckBox
@@ -126,6 +163,7 @@ const AddProduct = ({
                             handler = {setCheckedShipping}
                         />
                         <hr className="mb-4"/>
+                        {error && <h5 className="text-danger">{error}</h5>}
                         <button type="submit" className="btn btn-primary btn-lg btn-block">Add Product</button>
                     </form>
                 </div>

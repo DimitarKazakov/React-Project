@@ -7,7 +7,7 @@ namespace ShopBackend.Services
 {
     public interface IUserService
     {
-        Task<User> GetByUsername(string username);
+        Task<User> GetByEmail(string email);
 
         Task<User> GetByProductId(int id);
 
