@@ -82,8 +82,8 @@ const ProductDetails = ({
                 <ContactForm
                     heading={user.username}
                     email={user.email}
-                    phone={user.phone}
-                    address={`${user.address}, ${user.town}`}
+                    phone={user.phone ? user.phone : 'No phone number'}
+                    address="No address"
                     user = {currentUser}
                 />
             </AccordionItem>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ShopBackend.Dtos;
 using ShopBackend.Models;
@@ -7,7 +8,7 @@ namespace ShopBackend.Services
 {
     public interface IUserService
     {
-        Task<User> GetByEmail(string email);
+        Task<UserProfileDto> GetByEmail(string email);
 
         Task<User> GetByProductId(int id);
 
@@ -20,5 +21,7 @@ namespace ShopBackend.Services
         int GetWishListedProductsCount(string email);
 
         Task<bool> CreateMessage(MessageDto message);
+
+        Task<IEnumerable<UserMessageDto>> GetUserMessages(string email);
     }
 }

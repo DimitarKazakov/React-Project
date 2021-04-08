@@ -38,7 +38,7 @@ const Footer = ({
                 <Link className="text-white" to="/">Home</Link>
               </li>
               {user && <li className="mb-2">
-                <Link className="text-white" to="/users/profile">My Profile</Link>
+                <Link className="text-white" to={`/users/profile/${user}`}>My Profile</Link>
               </li>}
               <li className="mb-2">
                 <Link className="text-white" to="/categories">Shop</Link>
@@ -47,7 +47,7 @@ const Footer = ({
                 <Link className="text-white" to="/products/all">All Products</Link>
               </li>
               <li className="mb-2">
-                <a className="text-white" href="">About</a>
+                <a className="text-white" href="https://github.com/DimitarKazakov/React-Project">About</a>
               </li>
               {!user && <li className="mb-2">
                 <Link className="text-white" to="/login">Login</Link>

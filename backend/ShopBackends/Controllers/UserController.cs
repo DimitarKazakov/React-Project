@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShopBackend.Dtos;
@@ -25,7 +26,7 @@ namespace ShopBackend.Controllers
         //}
 
         [HttpGet("{email}")]
-        public async Task<User> GetByUsername(string email)
+        public async Task<UserProfileDto> GetByEmail(string email)
         {
             return await userService.GetByEmail(email);
         }
@@ -64,6 +65,12 @@ namespace ShopBackend.Controllers
         public int GetWishListedProductsCount(string email)
         {
             return userService.GetWishListedProductsCount(email);
+        }
+
+        [HttpGet("messages/{email}")]
+        public async Task<IEnumerable<UserMessageDto>> GetUserMessages(string email)
+        {
+            return await userService.GetUserMessages(email);
         }
     }
 }

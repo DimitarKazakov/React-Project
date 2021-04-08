@@ -91,7 +91,8 @@ const Header = ({
                         {categoryList}
                     </NavDropdown>
                     {user && <NavDropdown title="User Tab" id="basic-nav-dropdown" onClick={reloadLikedAndWishedProducts}>
-                        <Link className="dropdown-item" to="/users/profile">My Profile</Link>
+                        <Link className="dropdown-item" to={`/users/profile/${user}`}>My Profile</Link>
+                        <Link className="dropdown-item" to='/users/messages'>My Messages</Link>
                         <Link className="dropdown-item" to="/users/likesProducts">
                             Liked Products &nbsp;
                             <span className="badge badge-pill badge-primary">{likedProductsCount}</span>
