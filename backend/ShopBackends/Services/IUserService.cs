@@ -23,5 +23,11 @@ namespace ShopBackend.Services
         Task<bool> CreateMessage(MessageDto message);
 
         Task<IEnumerable<UserMessageDto>> GetUserMessages(string email);
+
+        IEnumerable<ProductDto> GetUserProducts(string email);
+
+        IEnumerable<ProductDto> GetUserLikedProducts(string email);
+
+        IEnumerable<ProductDto> GetUserWishedProducts(string email);
     }
 }

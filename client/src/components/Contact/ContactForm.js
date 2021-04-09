@@ -2,6 +2,7 @@ import TextInput from '../Forms/TextInput';
 import TextArea from '../Forms/TextArea';
 import ContactFormAside from '../Contact/ContactFormAside';
 import {useState} from 'react';
+import {Link} from 'react-router-dom';
 
 const ContactForm = ({
     heading,
@@ -59,7 +60,7 @@ const ContactForm = ({
 
     return (
         <section class="mb-4">
-        <h2 class="h1-responsive font-weight-bold text-center text-primary my-4">Contact {heading}</h2>
+        <Link to={`/users/profile/${heading}`} class="h1-responsive font-weight-bold text-center text-primary my-4 h2">Contact {heading}</Link>
         <div class="row">
         {error && <h5 className="text-danger">{error}</h5>}
             <div class="col-md-9 mb-md-0 mb-5">

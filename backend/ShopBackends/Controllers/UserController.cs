@@ -72,5 +72,23 @@ namespace ShopBackend.Controllers
         {
             return await userService.GetUserMessages(email);
         }
+
+        [HttpGet("products/{email}")]
+        public IEnumerable<ProductDto> GetUserProducts(string email)
+        {
+            return userService.GetUserProducts(email);
+        }
+
+        [HttpGet("products/liked/{email}")]
+        public IEnumerable<ProductDto> GetUserLikedProducts(string email)
+        {
+            return userService.GetUserLikedProducts(email);
+        }
+
+        [HttpGet("products/wished/{email}")]
+        public IEnumerable<ProductDto> GetUserWishedProducts(string email)
+        {
+            return userService.GetUserWishedProducts(email);
+        }
     }
 }

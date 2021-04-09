@@ -2,7 +2,7 @@ import Rating from '../Products/Rating';
 import KeyWords from '../Products/KeyWords';
 import {Link} from 'react-router-dom';
 import ProductImage from '../Products/ProductImage';
-
+import {Fragment} from 'react';
 const Product = ({
   category,
   condition,
@@ -15,6 +15,7 @@ const Product = ({
   price,
   productWords,
   user,
+  userEmail
 }) => {
 
   const currentUser = localStorage.getItem('user');
@@ -26,6 +27,37 @@ const Product = ({
   const WhishListProduct = (e) => {
     console.log(e.target);
   };
+
+  const deleteProduct = (e) => {
+    console.log(e.target);
+  };
+
+  let buttons = userEmail === currentUser ?
+  <Fragment>
+    <Link
+      className="btn btn-success btn-sm mt-2"
+      to={`/product/update/${id}`}
+    >Update</Link>
+    <button
+      className="btn btn-outline-info btn-sm mt-2"
+      type="button"
+      onClick={deleteProduct}
+      >Delete</button>
+  </Fragment>
+  :
+  <Fragment>
+    <button
+      className="btn btn-outline-primary btn-sm mt-2"
+      type="button"
+      onClick={LikeProduct}
+    >Like</button>
+    <button
+      className="btn btn-outline-info btn-sm mt-2"
+      type="button"
+      onClick={WhishListProduct}
+      >Add to wishlist</button>
+    </Fragment>
+  ;
 
   return (
     <div className="container mt-5 mb-5">
@@ -50,26 +82,13 @@ const Product = ({
               {productWords.length > 6 && <KeyWords keywords ={productWords.slice(5, 3)}/>}
             </div>
             <div className="align-items-center align-content-center col-md-3 border-left mt-1">
-              <h4 className="text-primary">{user}</h4>
+              <Link className="text-primary h4" to={`/users/profile/${user}`}>{user}</Link>
               <h4 className="mr-1">{price === 0 ? 'Free' : `${price} lv.`}</h4>
               <h6 className="text-success">{isFreeShipping ? 'Free shipping' : 'Shipping not included'}</h6>
               <h6 className="text-primary">{condition}</h6>
               <div className="d-flex flex-column mt-4">
                 <Link className="text-white btn btn-primary btn-sm" to={`/products/details/${id}`}>Details</Link>
-                {currentUser && <button
-                  className="btn btn-outline-primary btn-sm mt-2"
-                  type="button"
-                  onClick={LikeProduct}
-                >
-                  Like
-                </button>}
-                {currentUser && <button
-                  className="btn btn-outline-info btn-sm mt-2"
-                  type="button"
-                  onClick={WhishListProduct}
-                >
-                  Add to wishlist
-                </button>}
+                {currentUser && buttons}
               </div>
             </div>
           </div>

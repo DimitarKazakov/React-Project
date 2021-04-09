@@ -27,7 +27,11 @@ function App() {
               <Route path="/" exact component={Categories} />
               <Route path="/categories" exact component={Categories} />
               <Route path="/categories/:category" component={Products} />
+              <Route path="/users/products/liked/:user" component={Products} />
+              <Route path="/users/products/wished/:user" component={Products} />
+              <Route path="/users/products/:user" component={Products} />
               <Route path="/products/add" exact component={AddProduct}/>
+              <Route path="/products/update/:id" exact component={AddProduct}/>
               <Route path="/products/details/:id" component={ProductDetails}/>
               <Route path="/login" component={Login}/>
               <Route path="/register" component={Register}/>

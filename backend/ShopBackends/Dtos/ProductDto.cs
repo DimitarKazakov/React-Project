@@ -19,6 +19,8 @@ namespace ShopBackend.Dtos
 
         public string Description { get; set; }
 
+        public string Email { get; set; }
+
         public decimal Price { get; set; }
 
         public string Image { get; set; }

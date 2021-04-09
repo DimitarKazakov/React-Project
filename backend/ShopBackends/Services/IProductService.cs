@@ -12,7 +12,11 @@ namespace ShopBackend.Services
 
         public Task<ProductDto> GetProductById(int id);
 
-        public IEnumerable<Product> GetAllProducts();
+        public IEnumerable<ProductDto> GetAllProducts();
+
+        public int GetAllProductsCount();
+
+        public IEnumerable<ProductDto> GetAllProductsOfUser(string email);
 
         public IEnumerable<ProductDto> GetAllProductsInCategory(string category);
 

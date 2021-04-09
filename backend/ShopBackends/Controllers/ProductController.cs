@@ -23,14 +23,30 @@ namespace ShopBackend.Controllers
         }
 
         [HttpGet("all")]
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<ProductDto> GetAll()
         {
             return productService.GetAllProducts();
+        }
+
+        [HttpGet("all/count")]
+        public int GetAllCount()
+        {
+            return productService.GetAllProductsCount();
+        }
+
+        [HttpGet("all/{email}")]
+        public IEnumerable<ProductDto> GetAllUserProducts(string email)
+        {
+            return productService.GetAllProductsOfUser(email);
         }
 
         [HttpGet("category/{category}")]
         public IEnumerable<ProductDto> GetAllInCategory(string category)
         {
+            if (category.ToLower() == "all")
+            {
+                return productService.GetAllProducts();
+            }
             return productService.GetAllProductsInCategory(category);
         }
 

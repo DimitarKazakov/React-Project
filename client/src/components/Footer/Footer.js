@@ -44,7 +44,7 @@ const Footer = ({
                 <Link className="text-white" to="/categories">Shop</Link>
               </li>
               <li className="mb-2">
-                <Link className="text-white" to="/products/all">All Products</Link>
+                <Link className="text-white" to="/categories/all">All Products</Link>
               </li>
               <li className="mb-2">
                 <a className="text-white" href="https://github.com/DimitarKazakov/React-Project">About</a>

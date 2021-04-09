@@ -38,6 +38,25 @@ const Header = ({
         }, 500);
     }, []);
 
+    const searchUser = async (e) => {
+        e.preventDefault();
+        const searchValue = e.target.search.value;
+        if (!searchValue) {
+            return;
+        }
+
+        const userResponce = await fetch(`http://localhost:5002/api/user/${searchValue}`)
+            .then(res => res.json());
+
+        console.log(userResponce);
+        if(userResponce.id === null){
+            e.target.search.value = 'NO SUCH USER...';
+            return;
+        }
+
+        history.push(`/users/profile/${userResponce.email}`);
+    };
+
     const reloadCategories = (e) => {
         fetch('http://localhost:5002/api/category/all')
         .then(res => res.json())
@@ -87,25 +106,27 @@ const Header = ({
                 <Nav className="mr-auto">
                     <a className="nav-link" href="https://github.com/DimitarKazakov/React-Project">About</a>
                     <Link className="nav-link" to="/categories">Shop</Link>
+                    <Link className="nav-link" to="/categories/all">All Products</Link>
                     <NavDropdown title="Categories" id="basic-nav-dropdown" onClick={reloadCategories}>
                         {categoryList}
                     </NavDropdown>
                     {user && <NavDropdown title="User Tab" id="basic-nav-dropdown" onClick={reloadLikedAndWishedProducts}>
                         <Link className="dropdown-item" to={`/users/profile/${user}`}>My Profile</Link>
                         <Link className="dropdown-item" to='/users/messages'>My Messages</Link>
-                        <Link className="dropdown-item" to="/users/likesProducts">
+                        <Link className="dropdown-item" to='/categories/users'>My Products</Link>
+                        <Link className="dropdown-item" to={`/users/products/liked/${user}`}>
                             Liked Products &nbsp;
                             <span className="badge badge-pill badge-primary">{likedProductsCount}</span>
                         </Link>
-                        <Link className="dropdown-item" to="/users/wishList">
+                        <Link className="dropdown-item" to={`/users/products/wished/${user}`}>
                             Wish List &nbsp;
                             <span className="badge badge-pill badge-primary">{wishListedProductsCount}</span>
                         </Link>
                         <Link className="dropdown-item" to="/products/add">Add Product</Link>
                     </NavDropdown>}
                 </Nav>
-                {user && <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search for user..." aria-label="Search"/>
+                {user && <form class="form-inline my-2 my-lg-0" onSubmit={searchUser}>
+                    <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search for user..." aria-label="Search"/>
                     <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
                 </form>}
                 {!user && <NavLink className="nav-link text-white" to="/login">Login</NavLink>}

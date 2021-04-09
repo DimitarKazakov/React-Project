@@ -1,10 +1,19 @@
 import {Link} from 'react-router-dom';
 import {Fragment} from 'react';
+
 const ProfileImage = ({
     image,
     profileEmail,
-    currentUserEmail
+    currentUserEmail,
+    history
 }) => {
+
+    const deleteUser = () => {
+        console.log('DELETED');
+        localStorage.removeItem('user');
+        history.push('/');
+    };
+
     return (
         <div className="col-md-4 order-1">
             <div className="profile-img">
@@ -16,9 +25,12 @@ const ProfileImage = ({
                         {profileEmail === currentUserEmail && <Fragment>
                             <Link className="text-primary" to='/users/messages'>Messages</Link><br/>
                         </Fragment>}
-                        <Link className="text-primary" to="/">Products</Link><br />
-                        <Link className="text-primary" to="/">Liked Products</Link><br />
-                        <Link className="text-primary" to="/">Wish Listed Products</Link>
+                        <Link className="text-primary" to={`/users/products/${profileEmail}`}>Products</Link><br />
+                        <Link className="text-primary" to={`/users/products/wished/${profileEmail}`}>Liked Products</Link><br />
+                        <Link className="text-primary" to={`/users/products/wished/${profileEmail}`}>Wish Listed Products</Link><br/>
+                        {profileEmail === currentUserEmail && <Fragment>
+                            <button onClick={deleteUser} className="btn btn-primary">DELETE PROFILE</button><br/>
+                        </Fragment>}
                         <hr />
                 </div>
             </div>

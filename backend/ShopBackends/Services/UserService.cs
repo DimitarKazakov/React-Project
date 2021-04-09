@@ -41,7 +41,7 @@ namespace ShopBackend.Services
 
         public async Task<UserProfileDto> GetByEmail(string email)
         {
-            var user = await _dbContext.Users.Where(x => x.Email == email).Select(x => new UserProfileDto
+            var user = await _dbContext.Users.Where(x => x.Email.ToLower() == email.ToLower() || x.Username.ToLower() == email.ToLower()).Select(x => new UserProfileDto
             {
                 Id = x.Id,
                 Address = x.Address,
@@ -56,6 +56,11 @@ namespace ShopBackend.Services
                 ProductArr = x.Products
 
             }).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return new UserProfileDto();
+            }
 
             user.Likes = _dbContext.ReactedProducts.Where(x => user.ProductArr.Select(p => p.Id).Contains(x.Id)).Count();
             return user;
@@ -137,6 +142,79 @@ namespace ShopBackend.Services
                 CreatedOn = x.CreatedOn.ToString("dd/MM/yyyy"),
                 Id = x.Id
             }).ToList();
+        }
+
+
+        public IEnumerable<ProductDto> GetUserProducts(string email)
+        {
+            return _dbContext.Products
+                             .Where(x => x.User.Username.ToLower() == email.ToLower() || x.User.Email.ToLower() == email.ToLower())
+                             .OrderByDescending(x => x.CreatedOn)
+                             .Select(x => new ProductDto
+                             {
+                                 Id = x.Id,
+                                 IsFreeShipping = x.IsFreeShipping,
+                                 Name = x.Name,
+                                 Description = x.Description,
+                                 Category = x.Category.Name,
+                                 Condition = x.Condition.Name,
+                                 Image = x.Image,
+                                 CreatedOn = x.CreatedOn.ToString("dd/MM/yyyy"),
+                                 Price = x.Price,
+                                 ProductWords = x.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
+                                 User = x.User.Username,
+                                 Likes = x.ReactedProducts.Select(x => x.Liked).Count(),
+                                 Email = x.User.Email
+                             })
+                             .ToList();
+        }
+
+        public IEnumerable<ProductDto> GetUserLikedProducts(string email)
+        {
+            return _dbContext.ReactedProducts
+                             .Where(x => (x.User.Username.ToLower() == email.ToLower() || x.User.Email.ToLower() == email.ToLower()) && x.Liked == true)
+                             .OrderByDescending(x => x.Product.CreatedOn)
+                             .Select(x => new ProductDto
+                             {
+                                 Id = x.Product.Id,
+                                 IsFreeShipping = x.Product.IsFreeShipping,
+                                 Name = x.Product.Name,
+                                 Description = x.Product.Description,
+                                 Category = x.Product.Category.Name,
+                                 Condition = x.Product.Condition.Name,
+                                 Image = x.Product.Image,
+                                 CreatedOn = x.Product.CreatedOn.ToString("dd/MM/yyyy"),
+                                 Price = x.Product.Price,
+                                 ProductWords = x.Product.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
+                                 User = x.User.Username,
+                                 Likes = x.Product.ReactedProducts.Select(x => x.Liked).Count(),
+                                 Email = x.User.Email
+                             })
+                             .ToList();
+        }
+
+        public IEnumerable<ProductDto> GetUserWishedProducts(string email)
+        {
+            return _dbContext.ReactedProducts
+                             .Where(x => (x.User.Username.ToLower() == email.ToLower() || x.User.Email.ToLower() == email.ToLower()) && x.Wishlisted == true)
+                             .OrderByDescending(x => x.Product.CreatedOn)
+                             .Select(x => new ProductDto
+                             {
+                                 Id = x.Product.Id,
+                                 IsFreeShipping = x.Product.IsFreeShipping,
+                                 Name = x.Product.Name,
+                                 Description = x.Product.Description,
+                                 Category = x.Product.Category.Name,
+                                 Condition = x.Product.Condition.Name,
+                                 Image = x.Product.Image,
+                                 CreatedOn = x.Product.CreatedOn.ToString("dd/MM/yyyy"),
+                                 Price = x.Product.Price,
+                                 ProductWords = x.Product.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
+                                 User = x.User.Username,
+                                 Likes = x.Product.ReactedProducts.Select(x => x.Liked).Count(),
+                                 Email = x.User.Email
+                             })
+                             .ToList();
         }
     }
 }

@@ -31,6 +31,7 @@ const Profile = ({
                     image={user.photo}
                     profileEmail={user.email} 
                     currentUserEmail={currentUser}
+                    history={history}
                 />
                 <ProfileHeader 
                     username={user.username} 

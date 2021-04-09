@@ -1,15 +1,18 @@
 ﻿<Properties StartupConfiguration="{97855CC8-9145-4E75-82D2-CF8752310123}|Default">
   <MonoDevelop.Ide.ItemProperties.ShopBackend PreferredExecutionTarget="/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/UserService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Dtos/ProductDto.cs">
     <Files>
       <File FileName="Dtos/MessageDto.cs" Line="1" Column="1" />
-      <File FileName="Services/IUserService.cs" Line="25" Column="3" />
-      <File FileName="Services/UserService.cs" Line="129" Column="106" />
-      <File FileName="Models/Message.cs" Line="10" Column="9" />
-      <File FileName="Dtos/UserMessageDto.cs" Line="22" Column="22" />
-      <File FileName="Dtos/UserProfileDto.cs" Line="12" Column="54" />
-      <File FileName="Services/ProductService.cs" Line="70" Column="67" />
-      <File FileName="Controllers/UserController.cs" Line="71" Column="2" />
+      <File FileName="Services/IUserService.cs" Line="27" Column="31" />
+      <File FileName="Services/UserService.cs" Line="148" Column="38" />
+      <File FileName="Dtos/UserMessageDto.cs" />
+      <File FileName="Dtos/UserProfileDto.cs" Line="15" Column="1" />
+      <File FileName="Controllers/UserController.cs" Line="77" Column="30" />
+      <File FileName="Startup.cs" Line="62" Column="1" />
+      <File FileName="Program.cs" Line="15" Column="10" />
+      <File FileName="Services/ProductService.cs" Line="54" Column="74" />
+      <File FileName="Controllers/ProductController.cs" Line="49" Column="14" />
+      <File FileName="Dtos/ProductDto.cs" Line="22" Column="26" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,11 +20,11 @@
           <Node name="ShopBackend" expanded="True">
             <Node name="ShopBackend" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Dtos" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="UserService.cs" selected="True" />
+              <Node name="Dtos" expanded="True">
+                <Node name="ProductDto.cs" selected="True" />
               </Node>
+              <Node name="Models" expanded="True" />
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>

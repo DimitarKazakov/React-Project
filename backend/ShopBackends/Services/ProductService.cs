@@ -49,15 +49,37 @@ namespace ShopBackend.Services
             return _dbContext.Conditions.Select(x => x.Name).ToList();
         }
 
-        public IEnumerable<Product> GetAllProducts()
+        public IEnumerable<ProductDto> GetAllProducts()
         {
-            return _dbContext.Products.ToList();
+            return _dbContext.Products.OrderByDescending(x => x.CreatedOn).Select(x => new ProductDto
+            {
+                Id = x.Id,
+                IsFreeShipping = x.IsFreeShipping,
+                Name = x.Name,
+                Description = x.Description,
+                Category = x.Category.Name,
+                Condition = x.Condition.Name,
+                Image = x.Image,
+                CreatedOn = x.CreatedOn.ToString("dd/MM/yyyy"),
+                Price = x.Price,
+                ProductWords = x.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
+                User = x.User.Username,
+                Likes = x.ReactedProducts.Select(x => x.Liked).Count(),
+                Email = x.User.Email
+            })
+            .ToList(); ;
+        }
+
+        public int GetAllProductsCount()
+        {
+            return _dbContext.Products.Count();
         }
 
         public IEnumerable<ProductDto> GetAllProductsInCategory(string category)
         {
             return _dbContext.Products
                              .Where(x => x.Category.Name.ToLower() == category.ToLower())
+                             .OrderByDescending(x => x.CreatedOn)
                              .Select(x => new ProductDto
                              {
                                  Id = x.Id,
@@ -72,9 +94,33 @@ namespace ShopBackend.Services
                                  ProductWords = x.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
                                  User = x.User.Username,
                                  Likes = x.ReactedProducts.Select(x => x.Liked).Count(),
+                                 Email = x.User.Email
                              })
                              .ToList();
 
+        }
+
+        public IEnumerable<ProductDto> GetAllProductsOfUser(string email)
+        {
+            return _dbContext.Products
+                             .Where(x => x.User.Email.ToLower() == email.ToLower())
+                             .Select(x => new ProductDto
+                             {
+                                 Id = x.Id,
+                                 IsFreeShipping = x.IsFreeShipping,
+                                 Name = x.Name,
+                                 Description = x.Description,
+                                 Category = x.Category.Name,
+                                 Condition = x.Condition.Name,
+                                 Image = x.Image,
+                                 CreatedOn = x.CreatedOn.ToString("dd/MM/yyyy"),
+                                 Price = x.Price,
+                                 ProductWords = x.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
+                                 User = x.User.Username,
+                                 Likes = x.ReactedProducts.Select(x => x.Liked).Count(),
+                                 Email = x.User.Email
+                             })
+                             .ToList();
         }
 
         public async Task<ProductDto> GetProductById(int id)
@@ -93,6 +139,7 @@ namespace ShopBackend.Services
                 ProductWords = x.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
                 User = x.User.Username,
                 Likes = x.ReactedProducts.Select(x => x.Liked).Count(),
+                Email = x.User.Email
             }).FirstAsync(x => x.Id == id);
         }
 

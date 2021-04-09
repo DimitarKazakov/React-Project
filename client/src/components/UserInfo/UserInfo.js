@@ -1,5 +1,5 @@
 import UserInfoItem from './UserInfoItem';
-
+import {Link} from 'react-router-dom';
 const UserInfo = ({
     username,
     email,
@@ -13,7 +13,7 @@ const UserInfo = ({
                 User information
             </h4>
             <ul className="list-group mb-3">
-                <UserInfoItem name="Username" value={username}/>
+                <Link to={`/users/profile/${username}`}><UserInfoItem name="Username" value={username}/></Link>
                 {realName && <UserInfoItem name="Real Name" value={realName}/>}
                 <UserInfoItem name="Email" value={email}/>
                 {phone && <UserInfoItem name="Phone" value={phone}/>}
