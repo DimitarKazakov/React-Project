@@ -3,6 +3,7 @@ import KeyWords from '../Products/KeyWords';
 import {Link} from 'react-router-dom';
 import ProductImage from '../Products/ProductImage';
 import {Fragment} from 'react';
+import { useState } from 'react';
 const Product = ({
   category,
   condition,
@@ -15,21 +16,57 @@ const Product = ({
   price,
   productWords,
   user,
-  userEmail
+  userEmail,
+  history,
+  react,
 }) => {
 
   const currentUser = localStorage.getItem('user');
+  const [canLike, setCanLike] = useState(!react || !react.liked);
+  const [canWish, setCanWish] = useState(!react || !react.wishlisted);
+  const [likesCount, setLikes] = useState(+likes);
 
+  const body = {
+    id: id,
+    user: currentUser
+  };
   const LikeProduct = (e) => {
-    console.log(e.target);
+    fetch('http://localhost:5002/api/product/like',{
+        method: 'POST',
+        headers : {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+    if (canLike) {
+      setLikes((state) => state + 1);
+    }
+    else{
+      setLikes((state) => state - 1);
+    }
+    setCanLike(!canLike);
   };
 
-  const WhishListProduct = (e) => {
-    console.log(e.target);
+  const WhishListProduct = (e) => {    
+    fetch('http://localhost:5002/api/product/wish',{
+        method: 'POST',
+        headers : {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+    setCanWish(!canWish);
   };
 
   const deleteProduct = (e) => {
-    console.log(e.target);
+    fetch(`http://localhost:5002/api/product/delete/${id}`,{
+        method: 'DELETE',
+        headers : {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    history.push('/');
   };
 
   let buttons = userEmail === currentUser ?
@@ -47,15 +84,15 @@ const Product = ({
   :
   <Fragment>
     <button
-      className="btn btn-outline-primary btn-sm mt-2"
+      className="btn btn-outline-danger btn-sm mt-2"
       type="button"
       onClick={LikeProduct}
-    >Like</button>
+    >{canLike ? 'Like' : 'Unlike'}</button>
     <button
       className="btn btn-outline-info btn-sm mt-2"
       type="button"
       onClick={WhishListProduct}
-      >Add to wishlist</button>
+      >{canWish ? 'Add to wishlist' : 'Remove from wishlish'}</button>
     </Fragment>
   ;
 
@@ -75,7 +112,7 @@ const Product = ({
               <h6 className="text-muted">{category}</h6>
               <div className="d-flex flex-row">
                 <Rating likes={likes}/>
-                <span className="badge badge-primary">{likes} likes</span>
+                <span className="badge badge-primary">{likesCount} likes</span>
               </div>
               <KeyWords keywords={productWords.slice(0, 3)}/>
               {productWords.length > 3 && <KeyWords keywords ={productWords.slice(2, 3)}/>}

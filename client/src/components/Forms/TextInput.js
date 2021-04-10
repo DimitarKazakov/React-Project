@@ -1,4 +1,4 @@
-
+import {useState} from 'react';
 
 const TextInput = ({
     labelName,
@@ -7,7 +7,9 @@ const TextInput = ({
     errorMessage,
     margin,
     user,
-    name
+    name,
+    onBlur,
+    value
 }) => {
     return (
         <div className={`mb-${margin} mt-${margin}`}>
@@ -15,7 +17,7 @@ const TextInput = ({
                 {labelName}&nbsp;&nbsp;
                 {optionalLabelName && <span className="text-muted">{optionalLabelName}</span>}
             </label>
-            <input name={name} data-role="tagsinput" type="text" value={user} className="form-control" id={labelName} placeholder={placeholder} required/>
+            <input onBlur={onBlur} name={name} defaultValue={value} data-role="tagsinput" type="text" className="form-control" id={labelName} placeholder={placeholder}/>
             <span className="invalid-feedback">{errorMessage}</span>
         </div>
     );

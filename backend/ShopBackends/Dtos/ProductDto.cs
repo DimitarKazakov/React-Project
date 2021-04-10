@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ShopBackend.Models;
 
 namespace ShopBackend.Dtos
 {
@@ -36,5 +37,9 @@ namespace ShopBackend.Dtos
         public int Likes { get; set; }
 
         public string Condition { get; set; }
+
+        public ReactedProduct React { get; set; }
+
+        public DateTime DbCreatedOn { get; set; }
     }
 }

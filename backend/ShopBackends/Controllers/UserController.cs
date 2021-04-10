@@ -90,5 +90,17 @@ namespace ShopBackend.Controllers
         {
             return userService.GetUserWishedProducts(email);
         }
+
+        [HttpDelete("delete/{email}")]
+        public async Task<bool> DeleteUser(string email)
+        {
+            return await userService.Delete(email);
+        }
+
+        [HttpPut("update/{email}")]
+        public async Task<bool> Update(string email, [FromBody] UpdateUserDto user)
+        {
+            return await userService.Update(email, user);
+        }
     }
 }

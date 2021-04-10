@@ -5,10 +5,11 @@ import TextInput from '../Forms/TextInput';
 import TextArea from '../Forms/TextArea';
 import CheckBox from '../Forms/CheckBox';
 import Select from '../Forms/Select';
-import {CreateProduct} from '../../services/ProductService';
+import {UpdateProduct} from '../../services/ProductService';
 
 const AddProduct = ({
-    history
+    history,
+    match
 }) => {
     const freeShipping = [
         'Free Shipping',
@@ -27,6 +28,7 @@ const AddProduct = ({
     const [checkedShipping, setCheckedShipping] = useState(freeShipping[0]);
     const [img, setImg] = useState('');
     const [error, setError] = useState('');
+    const [product, setProduct] = useState({});
 
     useEffect(() => {
         fetch(`http://localhost:5002/api/user/${currentUser}`)
@@ -43,6 +45,13 @@ const AddProduct = ({
         .then(res => res.json())
         .then(res => setConditions(res))
         .catch(err => console.log(err));
+
+        fetch(`http://localhost:5002/api/product/productById/${match.params.id}/${currentUser}`)
+        .then(res => res.json())
+        .then(res => setProduct(res))
+        .catch(err => console.log(err));
+        
+        setImg(product.image);
     }, []);
 
     const SubmitForm = (e) => {
@@ -79,8 +88,8 @@ const AddProduct = ({
             return;
         }
 
-        CreateProduct(user, e.target, checkedCondition, checkedShipping);
-        history.push('/');
+        UpdateProduct(user, e.target, checkedCondition, checkedShipping, match.params.id);
+        history.push(`/products/details/${match.params.id}`);
     };
 
     const changeImg = (e) => {
@@ -89,7 +98,7 @@ const AddProduct = ({
 
     return (
         <div className="container">
-            <Jumbotron heading="Add product"/>
+            <Jumbotron heading={`Update ${product.name}`}/>
             <div className="row">
                 <UserInfo 
                     username={user.username}
@@ -110,6 +119,7 @@ const AddProduct = ({
                             placeholder="Type the name here..."
                             margin="5"
                             name="name"
+                            value={product.name}
                         />
                         <hr/>
                         <TextInput
@@ -120,6 +130,7 @@ const AddProduct = ({
                             margin="5"
                             name="image"
                             onBlur={changeImg}
+                            value={product.image}
                         />
                         <hr/>
                         <TextInput
@@ -129,6 +140,7 @@ const AddProduct = ({
                             errorMessage="Max 6 keywords!!!"
                             margin="5"
                             name="keys"
+                            value={product.productWords ? product.productWords.join(' ') : ''}
                         />
                         <hr/>
                         <TextArea
@@ -138,6 +150,7 @@ const AddProduct = ({
                             rows="6"
                             margin="5"
                             name="description"
+                            value={product.description}
                         />
                         <hr/>
                         <Select
@@ -145,6 +158,7 @@ const AddProduct = ({
                             optionalLabelName="(Chose one of the following categories)"
                             data={categories}
                             errorMessage="Choose category please"
+                            select={product.category}
                         />
                         <hr/>
                         <CheckBox
@@ -152,6 +166,7 @@ const AddProduct = ({
                             options = {conditions}
                             errorMessage = "Check condition"
                             handler = {setCheckedCondition}
+                            selected={product.condition}
                         />
                         <hr/>
                         <TextInput
@@ -161,6 +176,8 @@ const AddProduct = ({
                             errorMessage="The price is required"
                             margin="5"
                             name="price"
+                            value={product.price}
+
                         />
                         <hr/>
                         <CheckBox
@@ -169,10 +186,11 @@ const AddProduct = ({
                             options = {freeShipping}
                             errorMessage = "Check shipping type"
                             handler = {setCheckedShipping}
+                            selected={product.isFreeShipping ? freeShipping[0] : freeShipping[1]}
                         />
                         <hr className="mb-4"/>
                         {error && <h5 className="text-danger">{error}</h5>}
-                        <button type="submit" className="btn btn-primary btn-lg btn-block">Add Product</button>
+                        <button type="submit" className="btn btn-primary btn-lg btn-block">Update Product</button>
                     </form>
                 </div>
             </div>

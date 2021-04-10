@@ -68,12 +68,12 @@ namespace ShopBackend.Services
 
         public int GetLikesProductsCount(string email)
         {
-            return _dbContext.ReactedProducts.Where(x => x.User.Email == email && x.Liked == true).Count();
+            return _dbContext.ReactedProducts.Where(x => x.User.Email.ToLower() == email.ToLower() && x.Liked == true).Count();
         }
 
         public int GetWishListedProductsCount(string email)
         {
-            return _dbContext.ReactedProducts.Where(x => x.User.Email == email && x.Wishlisted == true).Count();
+            return _dbContext.ReactedProducts.Where(x => x.User.Email.ToLower() == email.ToLower() && x.Wishlisted == true).Count();
         }
 
         public async Task<bool> Login(UserLoginDto user)
@@ -163,8 +163,9 @@ namespace ShopBackend.Services
                                  Price = x.Price,
                                  ProductWords = x.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
                                  User = x.User.Username,
-                                 Likes = x.ReactedProducts.Select(x => x.Liked).Count(),
-                                 Email = x.User.Email
+                                 Likes = x.ReactedProducts.Where(x => x.Liked == true).Select(x => x.Liked).Count(),
+                                 Email = x.User.Email,
+                                 React = x.ReactedProducts.FirstOrDefault(y => y.User.Email.ToLower() == email || y.User.Username.ToLower() == email),
                              })
                              .ToList();
         }
@@ -187,8 +188,9 @@ namespace ShopBackend.Services
                                  Price = x.Product.Price,
                                  ProductWords = x.Product.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
                                  User = x.User.Username,
-                                 Likes = x.Product.ReactedProducts.Select(x => x.Liked).Count(),
-                                 Email = x.User.Email
+                                 Likes = x.Product.ReactedProducts.Where(x => x.Liked == true).Select(x => x.Liked).Count(),
+                                 Email = x.User.Email,
+                                 React = x
                              })
                              .ToList();
         }
@@ -211,10 +213,42 @@ namespace ShopBackend.Services
                                  Price = x.Product.Price,
                                  ProductWords = x.Product.ProductWords.Select(x => x.KeyWord.Name).ToArray(),
                                  User = x.User.Username,
-                                 Likes = x.Product.ReactedProducts.Select(x => x.Liked).Count(),
-                                 Email = x.User.Email
+                                 Likes = x.Product.ReactedProducts.Where(x => x.Liked == true).Select(x => x.Liked).Count(),
+                                 Email = x.User.Email,
+                                 React = x
                              })
                              .ToList();
+        }
+
+        public async Task<bool> Delete(string email)
+        {
+            var user = await this._dbContext.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() || x.Username.ToLower() == email.ToLower());
+            if (user == null)
+            {
+                return false;
+            }
+
+            this._dbContext.Users.Remove(user);
+            await this._dbContext.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> Update(string email, UpdateUserDto userDto)
+        {
+            var user = await this._dbContext.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.RealName = userDto.Name;
+            user.Phone = userDto.Phone;
+            user.Photo = userDto.Image;
+            user.Address = userDto.Address;
+            user.Town = userDto.Town;
+            await this._dbContext.SaveChangesAsync();
+
+            return true;
         }
     }
 }

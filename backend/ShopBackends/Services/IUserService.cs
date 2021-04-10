@@ -16,6 +16,10 @@ namespace ShopBackend.Services
 
         Task<bool> Login(UserLoginDto user);
 
+        Task<bool> Delete(string email);
+
+        Task<bool> Update(string email, UpdateUserDto user);
+
         int GetLikesProductsCount(string email);
 
         int GetWishListedProductsCount(string email);

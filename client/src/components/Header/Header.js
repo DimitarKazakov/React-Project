@@ -90,7 +90,7 @@ const Header = ({
             <Link 
             className="dropdown-item"
             key={category.id} 
-            to={`/categories/${category.name}`}>
+            to={`/categories/${category.name}/nouser/newest/nosearch`}>
                 {category.name} &nbsp;
                 <span className="badge badge-pill badge-primary">{category.products.length}</span>
             </Link>
@@ -106,19 +106,19 @@ const Header = ({
                 <Nav className="mr-auto">
                     <a className="nav-link" href="https://github.com/DimitarKazakov/React-Project">About</a>
                     <Link className="nav-link" to="/categories">Shop</Link>
-                    <Link className="nav-link" to="/categories/all">All Products</Link>
+                    <Link className="nav-link" to="/categories/all/nouser/newest/nosearch">All Products</Link>
                     <NavDropdown title="Categories" id="basic-nav-dropdown" onClick={reloadCategories}>
                         {categoryList}
                     </NavDropdown>
                     {user && <NavDropdown title="User Tab" id="basic-nav-dropdown" onClick={reloadLikedAndWishedProducts}>
                         <Link className="dropdown-item" to={`/users/profile/${user}`}>My Profile</Link>
                         <Link className="dropdown-item" to='/users/messages'>My Messages</Link>
-                        <Link className="dropdown-item" to='/categories/users'>My Products</Link>
-                        <Link className="dropdown-item" to={`/users/products/liked/${user}`}>
+                        <Link className="dropdown-item" to={`/categories/user/${user}/newest/nosearch`}>My Products</Link>
+                        <Link className="dropdown-item" to={`/categories/liked/${user}/newest/nosearch`}>
                             Liked Products &nbsp;
                             <span className="badge badge-pill badge-primary">{likedProductsCount}</span>
                         </Link>
-                        <Link className="dropdown-item" to={`/users/products/wished/${user}`}>
+                        <Link className="dropdown-item" to={`/categories/wished/${user}/newest/nosearch`}>
                             Wish List &nbsp;
                             <span className="badge badge-pill badge-primary">{wishListedProductsCount}</span>
                         </Link>

@@ -6,8 +6,9 @@ const CheckBox = ({
     options,
     errorMessage,
     handler,
+    selected
 }) => {
-    const [checked, setChecked] = useState(options[0]);
+    const [checked, setChecked] = useState('');
 
     const onChange = (e) => {
         setChecked(e.target.value);
@@ -15,12 +16,24 @@ const CheckBox = ({
     };
 
     const checkBoxes = options.map((option) =>
-        <div class="form-check" key={option}>
+        {
+            if (selected && selected === option) {
+                return (<div class="form-check" key={option}>
+            <input class="form-check-input" type="radio" name="" id={option} value={option} onChange={onChange} checked={true} required/>
+            <label class="form-check-label" for={option}>
+                {option}
+            </label>
+        </div>);
+            }
+            else{
+                return (<div class="form-check" key={option}>
             <input class="form-check-input" type="radio" name="" id={option} value={option} onChange={onChange} checked={checked === option} required/>
             <label class="form-check-label" for={option}>
                 {option}
             </label>
-        </div>
+        </div>);
+            }
+        }
     );
 
     return (

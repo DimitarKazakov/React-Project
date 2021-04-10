@@ -22,32 +22,38 @@ namespace ShopBackend.Controllers
             this.productService = productService;
         }
 
-        [HttpGet("all")]
-        public IEnumerable<ProductDto> GetAll()
-        {
-            return productService.GetAllProducts();
-        }
-
         [HttpGet("all/count")]
         public int GetAllCount()
         {
             return productService.GetAllProductsCount();
         }
 
-        [HttpGet("all/{email}")]
-        public IEnumerable<ProductDto> GetAllUserProducts(string email)
-        {
-            return productService.GetAllProductsOfUser(email);
-        }
-
-        [HttpGet("category/{category}")]
-        public IEnumerable<ProductDto> GetAllInCategory(string category)
+        [HttpGet("category/{category}/{user}/{currentUser}/{order}/{search}")]
+        public IEnumerable<ProductDto> GetAllInCategory(string category, string user, string currentUser, string order, string search)
         {
             if (category.ToLower() == "all")
             {
-                return productService.GetAllProducts();
+                return productService.GetAllProducts(user, currentUser, order, search);
             }
-            return productService.GetAllProductsInCategory(category);
+
+            if (category.ToLower() == "user")
+            {
+                return productService.GetAllProductsOfUser(user, currentUser, order, search);
+            }
+
+            if (category.ToLower() == "liked")
+            {
+                return productService.GetAllLikedProducts(user, currentUser, order, search);
+
+            }
+
+            if (category.ToLower() == "wished")
+            {
+                return productService.GetAllWishedProducts(user, currentUser, order, search);
+
+            }
+
+            return productService.GetAllProductsInCategory(category, user, currentUser, order, search);
         }
 
         [HttpGet("conditions")]
@@ -56,17 +62,40 @@ namespace ShopBackend.Controllers
             return productService.GetAllConditions();
         }
 
-        [HttpGet("productById/{id}")]
-        public async Task<ProductDto> GetById(int id)
+        [HttpGet("productById/{id}/{user}")]
+        public async Task<ProductDto> GetById(int id, string user)
         {
-            return await productService.GetProductById(id);
+            return await productService.GetProductById(id, user);
         }
 
         [HttpPost("add")]
-
         public async Task<bool> Create([FromBody] AddProductDto productDto)
         {
             return await productService.CreateProduct(productDto);
+        }
+
+        [HttpPost("like")]
+        public async Task Like([FromBody] LikedProductDto productDto)
+        {
+            await productService.LikeProduct(productDto);
+        }
+
+        [HttpPost("wish")]
+        public async Task Wish([FromBody] WishedProduct productDto)
+        {
+            await productService.WishProduct(productDto);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<bool> Delete(int id)
+        {
+            return await productService.Delete(id);
+        }
+
+        [HttpPut("update/{id}")]
+        public async Task<bool> Update(int id, [FromBody] AddProductDto productDto)
+        {
+            return await productService.Update(id, productDto);
         }
     }
 }

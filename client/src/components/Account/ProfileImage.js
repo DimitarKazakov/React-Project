@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import {Fragment} from 'react';
+import DeleteModal from './DeleteModal';
 
 const ProfileImage = ({
     image,
@@ -9,7 +10,12 @@ const ProfileImage = ({
 }) => {
 
     const deleteUser = () => {
-        console.log('DELETED');
+        fetch(`http://localhost:5002/api/user/delete/${currentUserEmail}`,{
+            method: 'DELETE',
+            headers : {
+                'Content-Type': 'application/json',
+            },
+        });
         localStorage.removeItem('user');
         history.push('/');
     };
@@ -25,9 +31,9 @@ const ProfileImage = ({
                         {profileEmail === currentUserEmail && <Fragment>
                             <Link className="text-primary" to='/users/messages'>Messages</Link><br/>
                         </Fragment>}
-                        <Link className="text-primary" to={`/users/products/${profileEmail}`}>Products</Link><br />
-                        <Link className="text-primary" to={`/users/products/wished/${profileEmail}`}>Liked Products</Link><br />
-                        <Link className="text-primary" to={`/users/products/wished/${profileEmail}`}>Wish Listed Products</Link><br/>
+                        <Link className="text-primary" to={`/categories/user/${profileEmail}/newest/nosearch`}>Products</Link><br />
+                        <Link className="text-primary" to={`/categories/liked/${profileEmail}/newest/nosearch`}>Liked Products</Link><br />
+                        <Link className="text-primary" to={`/categories/wished/${profileEmail}/newest/nosearch`}>Wish Listed Products</Link><br/>
                         {profileEmail === currentUserEmail && <Fragment>
                             <button onClick={deleteUser} className="btn btn-primary">DELETE PROFILE</button><br/>
                         </Fragment>}

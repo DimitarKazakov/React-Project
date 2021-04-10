@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ShopBackend.Models;
 namespace ShopBackend
@@ -23,6 +24,11 @@ namespace ShopBackend
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+        }
+
+        internal Task firstOrDefaultAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

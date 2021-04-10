@@ -20,7 +20,7 @@ const Categories = ({
             className="col-md-3 card card-width mt-5 border border-primary">
             <img className="card-img-top" src={category.image} alt="Card cap" />
             <div className="card-body">
-                <Link to={`/categories/${category.name}`} className="card-text">
+                <Link to={`/categories/${category.name}/nouser/newest/nosearch`} className="card-text">
                     {category.name} &nbsp;
                     <span className="badge badge-pill badge-primary">{category.products.length}</span>
                 </Link>

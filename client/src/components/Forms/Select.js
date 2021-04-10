@@ -5,13 +5,22 @@ const Select =({
     optionalLabelName,
     data,
     errorMessage,
+    select
 }) => {
     const [selected, setSelected] = useState(data[0]);
 
-    const options = data.map((x) => 
-        <option key={x.name} value={x.name}>
-            {x.name}
-        </option>
+    const options = data.map((x) => {
+            if (select && select == x.name) {
+                return (<option key={x.name} value={x.name} selected>
+                {x.name}
+                </option>);
+            }
+            else{
+                return (<option key={x.name} value={x.name}>
+                {x.name}
+                </option>);
+            }
+        }
     );
     
     return (

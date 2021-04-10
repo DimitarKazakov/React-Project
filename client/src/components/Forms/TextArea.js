@@ -7,7 +7,8 @@ const TextArea = ({
     placeholder,
     errorMessage,
     margin,
-    name
+    name,
+    value
 }) => {
     return (
         <div class={`form-group mb-${margin} mt-${margin}`}>
@@ -15,7 +16,7 @@ const TextArea = ({
                 {labelName}&nbsp;&nbsp;
                 {optionalLabelName && <span className="text-muted">{optionalLabelName}</span>}
             </label>
-            <textarea name={name} class="form-control" id={labelName} rows={rows} required/>
+            <textarea name={name} class="form-control" defaultValue={value} id={labelName} rows={rows} required/>
             <span className="invalid-feedback">{errorMessage}</span>
         </div>
     );

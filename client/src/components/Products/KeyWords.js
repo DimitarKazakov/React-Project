@@ -7,7 +7,7 @@ const KeyWords = ({
     const firstKeyWords = [];
     for(let i = 0; i < length - 1; i++){
         firstKeyWords.push(<span key={keywords[i]} >{keywords[i]}</span>);
-        firstKeyWords.push(<span className="dot"></span>);
+        firstKeyWords.push(<span key={`${keywords[i]}-dot`} className="dot"></span>);
     }
 
     let lastKeyWord = (

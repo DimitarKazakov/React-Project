@@ -39,7 +39,7 @@ const ProfileHeader = ({
                 </div>
             </div>
             {profileEmail === currentUserEmail && <div className="col-md-2 order-md-3 order-2 mt-3 mb-3 mt-md-0 mb-md-0">
-                <Link className="btn btn-outline-primary border border-primary" to="users/profile/update">Edit Profile</Link>
+                <Link className="btn btn-outline-primary border border-primary" to={`/users/update/${currentUserEmail}`}>Edit Profile</Link>
             </div>}
             {profileEmail !== currentUserEmail && <div className="col-md-2 order-md-3 order-2 mt-3 mb-3 mt-md-0 mb-md-0">
                 <a className="btn btn-outline-primary border border-primary" href="#Contact">Write Message</a>

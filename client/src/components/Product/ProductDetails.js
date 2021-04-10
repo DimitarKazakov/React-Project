@@ -8,14 +8,19 @@ import {Fragment} from 'react';
 import {Link} from 'react-router-dom';
 
 const ProductDetails = ({
-    match
+    match,
+    history
 }) => {
     
     const [product, setProduct] = useState({});
     const [user, setUser] = useState({});
+    const [canLike, setCanLike] = useState(true);
+    const [canWish, setCanWish] = useState(true);
+    const [likesCount, setLikes] = useState(0);
+
     const currentUser = localStorage.getItem('user');
     useEffect(() => {
-        fetch(`http://localhost:5002/api/product/productById/${match.params.id}`)
+        fetch(`http://localhost:5002/api/product/productById/${match.params.id}/${currentUser}`)
         .then(res => res.json())
         .then(res => setProduct(res))
         .catch(err => console.log(err));
@@ -26,16 +31,53 @@ const ProductDetails = ({
         .catch(err => console.log(err));
     }, []);
 
-    const LikeProduct = (e) => {
-        console.log(e.target);
-      };
-    
-      const WhishListProduct = (e) => {
-        console.log(e.target);
-      };
+    useEffect(() => {
+        setLikes(product.likes);
+        setCanLike(!product.react || !product.react.liked);
+        setCanWish(!product.react || !product.react.wishlisted);
+    }, [product]);
+
+  const body = {
+    id: product.id,
+    user: currentUser
+  };
+  const LikeProduct = (e) => {
+    fetch('http://localhost:5002/api/product/like',{
+        method: 'POST',
+        headers : {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+    if (canLike) {
+      setLikes((state) => state + 1);
+    }
+    else{
+      setLikes((state) => state - 1);
+    }
+    setCanLike(!canLike);
+  };
+
+  const WhishListProduct = (e) => {    
+    fetch('http://localhost:5002/api/product/wish',{
+        method: 'POST',
+        headers : {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+    setCanWish(!canWish);
+  };
     
       const deleteProduct = (e) => {
-        console.log(e.target);
+        fetch(`http://localhost:5002/api/product/delete/${product.id}`,{
+            method: 'DELETE',
+            headers : {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        history.push('/');
       };
 
     let buttons = user.email === currentUser ?
@@ -56,12 +98,12 @@ const ProductDetails = ({
         className="btn btn-outline-primary mr-0 mr-md-5 mt-2 mb-3"
         type="button"
         onClick={LikeProduct}
-        >Like</button>
+        >{canLike ? 'Like' : 'Unlike'}</button>
         <button
         className="btn btn-outline-info mr-0 mr-md-5 mt-2 mb-3"
         type="button"
         onClick={WhishListProduct}
-        >Add to wishlist</button>
+        >{canWish ? 'Add to wishlist' : 'Remove from wishlish'}</button>
         </Fragment>
   ;
 
@@ -84,7 +126,7 @@ const ProductDetails = ({
             <p className="text-primary text-right">Added on: {product.createdOn} <br/> By: {<Link to={`/users/profile/${product.user}`}>{product.user}</Link>}</p>
             <div className="d-flex flex-row">
                 <Rating likes={product.likes}/>
-                <span className="badge badge-primary">{product.likes} likes</span>
+                <span className="badge badge-primary">{likesCount} likes</span>
             </div>
             <hr/>
             <p className="text-left h5">Condition: <span className="text-primary">{product.condition}</span></p>
